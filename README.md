@@ -47,6 +47,7 @@
 
 <h2 id = "installing-dependencies">Installing App Dependencies</h2>
 <p>To quickly install all modules used in this project, just run the following in your terminal and you'll be good to go!</p>
+
 ```zsh
 cd backend
 npm i
