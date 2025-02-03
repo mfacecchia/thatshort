@@ -3,10 +3,10 @@ import Footer from "@/common/components/footer";
 import Form from "@/common/components/form";
 import { Button } from "@/common/components/ui/button";
 import { Input } from "@/common/components/ui/input";
+import { ToastAction } from "@/common/components/ui/toast";
 import { Toaster } from "@/common/components/ui/toaster";
 import { useToast } from "@/common/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ToastAction } from "@radix-ui/react-toast";
 import axios, { AxiosError } from "axios";
 import { ChevronRight } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -118,6 +118,7 @@ const LandingPage = () => {
             </div>
             {/* FIXME: Not positioned to full bottom */}
             <Footer />
+            {/* FIXME: Placing itself on top-right on mobile devices */}
             <Toaster />
         </div>
     );
