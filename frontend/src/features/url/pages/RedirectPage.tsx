@@ -8,7 +8,9 @@ const RedirectPage = () => {
     axios
         .get(import.meta.env.VITE_BACKEND_ADDRESS + "/api/v1/url/" + id)
         .then(({ data: { data } }) => {
-            window.location.href = data.redirect_to;
+            setTimeout(() => {
+                window.location.href = data.redirect_to;
+            }, 250);
         })
         .catch((err) => {
             // TODO: Display error message on link not found
