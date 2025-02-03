@@ -2,24 +2,37 @@ import logo from "@/common/assets/logo.svg";
 import Footer from "@/common/components/footer";
 import Form from "@/common/components/form";
 import InputWithIcon from "@/common/components/inputWithIcon";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { useForm } from "react-hook-form";
+import { urlSchema } from "../url/schemas/urlSchema";
+import { TUrl } from "../url/types/urlType";
 
 const LandingPage = () => {
     const {
         register,
         handleSubmit,
-        formState: { isValid },
-    } = useForm();
+        formState: { errors },
+    } = useForm<TUrl>({
+        resolver: zodResolver(urlSchema),
+    });
 
     // TODO: Call the backend with a POST request
-    function shortenUrl() {
-        fetch(import.meta.env.VITE_BACKEND_ADDRESS + "/debug")
-            .then((res) => res.json())
-            .then((jsonRes) => {
-                console.log(jsonRes);
+    function shortenUrl(urlData: TUrl) {
+        axios
+            .post(
+                import.meta.env.VITE_BACKEND_ADDRESS + "/api/v1/url",
+                {
+                    redirect_to: urlData.redirect_to,
+                },
+                {
+                    timeout: 1500,
+                }
+            )
+            .then(({ data }) => {
+                // TODO: Display generated shortened url here
+                console.log(data);
             });
-        console.info("Submitting");
-        return;
     }
 
     return (
@@ -38,11 +51,10 @@ const LandingPage = () => {
                     Begin by typing the link you want to shorten, we will sort
                     out the rest :)
                 </p>
-                {/* TODO: Add interactivity (a.k.a. form submission handling) */}
                 <Form onSubmit={handleSubmit(shortenUrl)} className="space-y-2">
                     {/* TODO: Register input */}
                     <InputWithIcon title="Shorten this link!" />
-                    {!isValid && (
+                    {errors.redirect_to && (
                         <p className="text-red-500 small mt-0">
                             Oopsie! This link appears to be invalid :/
                         </p>
