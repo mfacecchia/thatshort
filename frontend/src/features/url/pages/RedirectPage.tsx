@@ -1,10 +1,12 @@
 import redirecting from "@/common/assets/redirecting.svg";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
 const RedirectPage = () => {
     const params = useParams();
     const { id } = params;
+    const [uselessFact, setUselessFact] = useState<string | null>(null);
 
     axios
         .get(import.meta.env.VITE_BACKEND_ADDRESS + "/api/v1/url/" + id)
@@ -18,6 +20,19 @@ const RedirectPage = () => {
             console.error(err);
         });
 
+    useEffect(() => {
+        axios
+            .get("https://uselessfacts.jsph.pl/random.json")
+            .then(({ data: { text } }) => {
+                setUselessFact(text);
+            })
+            .catch(() => {
+                setUselessFact(
+                    "When Google entered the phone market with its Android devices, Steve Jobs felt betrayed and stated that they had stolen some features of the iPhone."
+                );
+            });
+    }, []);
+
     return (
         <div className="space-y-11">
             <div className="flex flex-col items-center justify-center w-full">
@@ -28,6 +43,7 @@ const RedirectPage = () => {
                     </h1>
                     <div className="space-y-1">
                         <p className="large leading-none">Did you know?</p>
+                        {uselessFact && <p>{uselessFact}</p>}
                     </div>
                 </div>
             </div>
