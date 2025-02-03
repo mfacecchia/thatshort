@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import LandingPage from "./features/landing/LandingPage";
+import RedirectPage from "./features/url/pages/RedirectPage";
 
 function App() {
     return (
@@ -7,6 +8,7 @@ function App() {
             <Routes>
                 <Route path="/">
                     <Route index element={<LandingPage />} />
+                    <Route path="/:id" element={<RedirectPage />} />
                 </Route>
                 {/* TODO: Add 404 page */}
                 <Route path="*" element={<h1>404</h1>} />
