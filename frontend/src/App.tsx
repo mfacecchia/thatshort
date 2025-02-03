@@ -11,7 +11,6 @@ function App() {
                     <Route index element={<LandingPage />} />
                     <Route path="/:id" element={<RedirectPage />} />
                 </Route>
-                {/* TODO: Add 404 page */}
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
