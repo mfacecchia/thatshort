@@ -34,8 +34,10 @@ class UrlController {
             let url: url = req.body;
             url.id = this.urlService.generateUrlId();
             await this.urlService.createUrl(url);
-            // TODO: Return generated link (for example https://thatshort.it/abc123fg)
-            setJsonResponse(res, 201, "Success", {});
+            let shortenedUrl = this.urlService.generateShortenedUrl(url);
+            setJsonResponse(res, 201, "Success", {
+                shortenedUrl: shortenedUrl,
+            });
             return;
         };
     }
