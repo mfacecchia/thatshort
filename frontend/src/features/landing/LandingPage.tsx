@@ -2,8 +2,26 @@ import logo from "@/common/assets/logo.svg";
 import Footer from "@/common/components/footer";
 import Form from "@/common/components/form";
 import InputWithIcon from "@/common/components/inputWithIcon";
+import { useForm } from "react-hook-form";
 
 const LandingPage = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { isValid },
+    } = useForm();
+
+    // TODO: Call the backend with a POST request
+    function shortenUrl() {
+        fetch(import.meta.env.VITE_BACKEND_ADDRESS + "/debug")
+            .then((res) => res.json())
+            .then((jsonRes) => {
+                console.log(jsonRes);
+            });
+        console.info("Submitting");
+        return;
+    }
+
     return (
         <div className="space-y-11">
             <div className="flex flex-col items-center justify-center w-full">
@@ -21,8 +39,14 @@ const LandingPage = () => {
                     out the rest :)
                 </p>
                 {/* TODO: Add interactivity (a.k.a. form submission handling) */}
-                <Form>
+                <Form onSubmit={handleSubmit(shortenUrl)} className="space-y-2">
+                    {/* TODO: Register input */}
                     <InputWithIcon title="Shorten this link!" />
+                    {!isValid && (
+                        <p className="text-red-500 small mt-0">
+                            Oopsie! This link appears to be invalid :/
+                        </p>
+                    )}
                 </Form>
             </div>
             <Footer />
