@@ -1,7 +1,8 @@
-import TResponse from "common/types/response.type";
 import cors from "cors";
 import express, { Application, json } from "express";
-import { BASE_V1_ENDPOINT } from "./constants";
+
+import UrlController from "../../features/url/controller/UrlController";
+import TResponse from "../types/response.type";
 import { setJsonResponse } from "./setJsonResponse";
 
 // TODO: Make this a class with all relative methods
@@ -16,13 +17,18 @@ function startup(): Application {
     app.use(json());
 
     buildDebugEndpoint(app);
+
+    const urlController = new UrlController(app);
+    urlController.buildEndpoints();
+
     buildNotFoundEndpoint(app);
+
     return app;
 }
 
 function buildDebugEndpoint(app: Application) {
     if (process.env.NODE_ENV === "production") return;
-    app.get(BASE_V1_ENDPOINT + "/debug", (req, res: TResponse) => {
+    app.get("/debug", (req, res: TResponse) => {
         setJsonResponse(res, 200, "Success", {});
         return;
     });
@@ -37,3 +43,5 @@ function buildNotFoundEndpoint(app: Application) {
         });
     });
 }
+
+export default startup;
