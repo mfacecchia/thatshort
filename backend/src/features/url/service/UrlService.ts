@@ -35,6 +35,10 @@ class UrlService {
     generateUrlId(): string {
         return crypto.randomBytes(4).toString("hex");
     }
+
+    generateShortenedUrl(url: url): string {
+        return `${process.env.FRONTEND_ADDRESS}/${url.id}`;
+    }
 }
 
 export default UrlService;
