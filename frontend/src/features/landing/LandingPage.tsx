@@ -19,7 +19,6 @@ const LandingPage = () => {
         resolver: zodResolver(urlSchema),
     });
 
-    // TODO: Call the backend with a POST request
     function shortenUrl(urlData: TUrl) {
         axios
             .post(
@@ -48,17 +47,18 @@ const LandingPage = () => {
                     </p>
                 </div>
             </div>
-            <div className="w-full">
+            <div className="w-full flex flex-col items-center">
                 <p>
                     Begin by typing the link you want to shorten, we will sort
                     out the rest :)
                 </p>
                 <Form onSubmit={handleSubmit(shortenUrl)} className="space-y-2">
                     {/* TODO: Replace with component */}
-                    <div className="flex justify-between gap-2 h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm">
+                    <div className="flex justify-between gap-2 h-9 w-full rounded-md border border-input bg-transparent pl-2 pr-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm">
                         <Input
                             {...register("redirect_to")}
-                            className="border-none p-0 shadow-none transition-none h-full"
+                            className="border-none p-0 pl-1 shadow-none transition-none h-full"
+                            autoFocus
                         />
                         <Button
                             type="submit"
@@ -68,6 +68,7 @@ const LandingPage = () => {
                             title="Shorten this link!"
                             aria-description="Click this button to shorten your link!"
                         >
+                            {/* TODO: Display spinner on during fetch */}
                             <ChevronRight className="stroke-primary" />
                         </Button>
                     </div>
@@ -78,6 +79,7 @@ const LandingPage = () => {
                     )}
                 </Form>
             </div>
+            {/* FIXME: Not positioned to full bottom */}
             <Footer />
         </div>
     );
