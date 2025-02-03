@@ -11,13 +11,14 @@ class UrlRepository {
     }
 
     async create(url: url): Promise<void> {
-        await PRISMA_CLIENT.url.create({
+        let createdUrl = await PRISMA_CLIENT.url.create({
             data: {
                 id: url.id,
                 redirect_to: url.redirect_to,
                 created_at: new Date(),
             },
         });
+        url.created_at = createdUrl.created_at;
     }
 }
 
