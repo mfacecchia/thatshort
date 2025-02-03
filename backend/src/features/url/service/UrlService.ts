@@ -27,6 +27,9 @@ class UrlService {
         try {
             await this.urlRepository.create(url);
         } catch (err) {
+            // TODO: Remove this log and throw custom error
+            // TODO: Check for unique key constraint violation as well
+            // (generated key collision)
             console.log(err);
             throw err;
         }
