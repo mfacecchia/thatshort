@@ -1,4 +1,4 @@
-import TResponse from "common/types/response.type";
+import TResponse from "../types/response.type";
 
 /**
  * Basically sets the JSON response according to standard
