@@ -2,7 +2,7 @@
 <p align = "center">Just a URL Shortener, nothing special actually</p>
 
 <h2>Table of contents</h2>
-<a href = "brief-description">Brief Description</a>
+<a href = "#brief-description">Brief Description</a><br>
 <a href = "#built-in">Built in - Technologies</a><br>
 <a href = "#modules-references">Modules References</a><br>
 <a href = "#installing-dependencies">Installing Dependencies</a><br>
