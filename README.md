@@ -27,7 +27,7 @@
 <img src = "https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt = "TailwindCSS">
 <img src = "https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge&logo=shadcnui&logoColor=white" alt = "Shadcn/ui">
 <br>
-<img src = "https://img.shields.io/badge/PostgreSQL-316192?styl" alt = "PostgreSQL">
+<img src = "https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt = "PostgreSQL">
 <img src = "https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white" alt = "Prisma ORM">
 <hr>
 
