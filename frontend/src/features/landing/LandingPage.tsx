@@ -42,7 +42,7 @@ const LandingPage = () => {
             <div className="flex flex-col items-center justify-center w-full">
                 <img src={logo} alt="Logo" className="size-48" />
                 <div className="text-center space-y-2 max-w-80">
-                    <h1 className="leading-none">Thashort</h1>
+                    <h1 className="leading-none">Thatshort</h1>
                     <p className="large leading-none">
                         The best URL shortener on earth (kind of)
                     </p>
