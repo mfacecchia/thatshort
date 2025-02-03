@@ -3,8 +3,11 @@ import Footer from "@/common/components/footer";
 import Form from "@/common/components/form";
 import { Button } from "@/common/components/ui/button";
 import { Input } from "@/common/components/ui/input";
+import { Toaster } from "@/common/components/ui/toaster";
+import { useToast } from "@/common/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
+import { ToastAction } from "@radix-ui/react-toast";
+import axios, { AxiosError } from "axios";
 import { ChevronRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { urlSchema } from "../url/schemas/urlSchema";
@@ -18,8 +21,14 @@ const LandingPage = () => {
     } = useForm<TUrl>({
         resolver: zodResolver(urlSchema),
     });
+    const toast = useToast();
 
     function shortenUrl(urlData: TUrl) {
+        toast.toast({
+            title: "Processing",
+            description: "Tick, Tock, Tick, Tock. Your link is on its way!",
+            variant: "default",
+        });
         axios
             .post(
                 import.meta.env.VITE_BACKEND_ADDRESS + "/api/v1/url",
@@ -27,12 +36,40 @@ const LandingPage = () => {
                     redirect_to: urlData.redirect_to,
                 },
                 {
-                    timeout: 1500,
+                    timeout: 5000,
                 }
             )
-            .then(({ data }) => {
-                // TODO: Display generated shortened url here
-                console.log(data);
+            .then(({ data: { data } }) => {
+                toast.toast({
+                    title: "Generated!",
+                    description:
+                        "Here's your link! Click the button to copy it :)",
+                    variant: "default",
+                    action: (
+                        <ToastAction
+                            altText="Copy shortened link"
+                            onClick={() => {
+                                navigator.clipboard.writeText(
+                                    data.shortenedUrl
+                                );
+                            }}
+                        >
+                            Copy Link
+                        </ToastAction>
+                    ),
+                    duration: 15000,
+                });
+            })
+            .catch((err) => {
+                if (err instanceof AxiosError) {
+                    toast.toast({
+                        title: "Houston, we got a problem",
+                        description:
+                            "The request was taking too much to complete, if you don't mind please try again in a few minutes :/",
+                        variant: "destructive",
+                        duration: 15000,
+                    });
+                }
             });
     }
 
@@ -81,6 +118,7 @@ const LandingPage = () => {
             </div>
             {/* FIXME: Not positioned to full bottom */}
             <Footer />
+            <Toaster />
         </div>
     );
 };
