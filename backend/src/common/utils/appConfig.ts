@@ -2,6 +2,7 @@ import cors from "cors";
 import express, { Application, json } from "express";
 
 import UrlController from "../../features/url/controller/UrlController";
+import { handleError } from "../middlewares/handleError";
 import TResponse from "../types/response.type";
 import { setJsonResponse } from "./setJsonResponse";
 
@@ -21,6 +22,7 @@ function startup(): Application {
     const urlController = new UrlController(app);
     urlController.buildEndpoints();
 
+    app.use(handleError);
     buildNotFoundEndpoint(app);
 
     return app;
@@ -36,6 +38,7 @@ function buildDebugEndpoint(app: Application) {
 
 function buildNotFoundEndpoint(app: Application) {
     app.use((req, res: TResponse) => {
+        // TODO: Use the `setJsonResponse` function
         res.status(404).json({
             status: 404,
             message: `Route ${req.baseUrl + req.path} not found.`,
