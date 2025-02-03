@@ -1,9 +1,11 @@
 import logo from "@/common/assets/logo.svg";
 import Footer from "@/common/components/footer";
 import Form from "@/common/components/form";
-import InputWithIcon from "@/common/components/inputWithIcon";
+import { Button } from "@/common/components/ui/button";
+import { Input } from "@/common/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { ChevronRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { urlSchema } from "../url/schemas/urlSchema";
 import { TUrl } from "../url/types/urlType";
@@ -52,8 +54,23 @@ const LandingPage = () => {
                     out the rest :)
                 </p>
                 <Form onSubmit={handleSubmit(shortenUrl)} className="space-y-2">
-                    {/* TODO: Register input */}
-                    <InputWithIcon title="Shorten this link!" />
+                    {/* TODO: Replace with component */}
+                    <div className="flex justify-between gap-2 h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm">
+                        <Input
+                            {...register("redirect_to")}
+                            className="border-none p-0 shadow-none transition-none h-full"
+                        />
+                        <Button
+                            type="submit"
+                            variant="ghost"
+                            size="icon"
+                            className="p-0 h-full w-auto aspect-square"
+                            title="Shorten this link!"
+                            aria-description="Click this button to shorten your link!"
+                        >
+                            <ChevronRight className="stroke-primary" />
+                        </Button>
+                    </div>
                     {errors.redirect_to && (
                         <p className="text-red-500 small mt-0">
                             Oopsie! This link appears to be invalid :/
