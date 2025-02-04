@@ -1,6 +1,7 @@
 import invalidLink from "@/common/assets/invalidLink.svg";
 import redirecting from "@/common/assets/redirecting.svg";
 import BackHomeButton from "@/common/components/backHomeButton";
+import updatePageTitle from "@/common/utils/updatePageTitle";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
@@ -10,6 +11,7 @@ const RedirectPage = () => {
     const { id } = params;
     const [uselessFact, setUselessFact] = useState<string | null>(null);
     const [isRedirecting, setIsRedirecting] = useState<boolean>(true);
+    updatePageTitle(isRedirecting ? "Redirecting" : "Error");
 
     useEffect(() => {
         axios

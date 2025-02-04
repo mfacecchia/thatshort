@@ -1,7 +1,10 @@
 import notFound from "@/common/assets/notFound.svg";
 import BackHomeButton from "../components/backHomeButton";
+import updatePageTitle from "../utils/updatePageTitle";
 
 const NotFoundPage = () => {
+    updatePageTitle("Not found");
+
     return (
         <div className="space-y-11">
             <div className="flex flex-col items-center justify-center w-full">
