@@ -120,7 +120,6 @@ const LandingPage = () => {
             </div>
             {/* FIXME: Not positioned to full bottom */}
             <Footer />
-            {/* FIXME: Placing itself on top-right on mobile devices */}
             <Toaster />
         </div>
     );
