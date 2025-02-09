@@ -17,19 +17,19 @@ const LandingPage = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitting },
     } = useForm<TUrl>({
         resolver: zodResolver(urlSchema),
     });
     const toast = useToast();
 
-    function shortenUrl(urlData: TUrl) {
+    async function shortenUrl(urlData: TUrl): Promise<void> {
         toast.toast({
             title: "Processing",
             description: "Tick, Tock, Tick, Tock. Your link is on its way!",
             variant: "default",
         });
-        axios
+        return axios
             .post(
                 import.meta.env.VITE_BACKEND_ADDRESS + "/api/v1/url",
                 {
@@ -104,6 +104,8 @@ const LandingPage = () => {
                             className="p-0 h-full w-auto aspect-square"
                             title="Shorten this link!"
                             aria-description="Click this button to shorten your link!"
+                            disabled={isSubmitting}
+                            aria-disabled={isSubmitting}
                         >
                             {/* TODO: Display spinner on during fetch */}
                             <ChevronRight className="stroke-primary" />
