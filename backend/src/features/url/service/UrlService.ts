@@ -1,5 +1,12 @@
 import { url } from "@prisma/client";
+import {
+    PrismaClientInitializationError,
+    PrismaClientKnownRequestError,
+} from "@prisma/client/runtime/library";
 import crypto from "crypto";
+import DatabaseConnectionError from "../../../common/errors/DatabaseConnectionError";
+import NotFoundError from "../../../common/errors/NotFoundError";
+import UrlCollisionError from "../errors/UrlCollisionError";
 import UrlRepository from "../repository/UrlRepository";
 
 class UrlService {
@@ -13,12 +20,16 @@ class UrlService {
         try {
             let url = await this.urlRepository.find(id);
             if (!url) {
-                // TODO: Throw custom error
-                throw new Error("Url not found.");
+                throw new NotFoundError("Url not found.");
             }
             return url;
         } catch (err) {
-            console.log(err);
+            if (err instanceof PrismaClientInitializationError) {
+                throw new DatabaseConnectionError(
+                    "Cannot establish connection to database.",
+                    err
+                );
+            }
             throw err;
         }
     }
@@ -27,10 +38,14 @@ class UrlService {
         try {
             await this.urlRepository.create(url);
         } catch (err) {
-            // TODO: Remove this log and throw custom error
-            // TODO: Check for unique key constraint violation as well
-            // (generated key collision)
-            console.log(err);
+            if (err instanceof PrismaClientKnownRequestError) {
+                if (err.code === "P2002") {
+                    throw new UrlCollisionError(
+                        "Collision detected. A new key needs to be generated.",
+                        err
+                    );
+                }
+            }
             throw err;
         }
     }
