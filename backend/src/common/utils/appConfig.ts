@@ -17,7 +17,7 @@ function startup(): Application {
     );
     app.use(json());
 
-    buildDebugEndpoint(app);
+    if (process.env.NODE_ENV === "development") buildDebugEndpoint(app);
 
     const urlController = new UrlController(app);
     urlController.buildEndpoints();
