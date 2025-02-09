@@ -11,3 +11,4 @@ type TDefaultResponseBody<TData = TDefaultData> = {
 type TResponse<ResponseBody = TDefaultResponseBody> = Response<ResponseBody>;
 
 export default TResponse;
+export { TDefaultResponseBody };
