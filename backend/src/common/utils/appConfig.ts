@@ -38,12 +38,12 @@ function buildDebugEndpoint(app: Application) {
 
 function buildNotFoundEndpoint(app: Application) {
     app.use((req, res: TResponse) => {
-        // TODO: Use the `setJsonResponse` function
-        res.status(404).json({
-            status: 404,
-            message: `Route ${req.baseUrl + req.path} not found.`,
-            data: {},
-        });
+        setJsonResponse(
+            res,
+            404,
+            `Route ${req.baseUrl + req.path} not found.`,
+            {}
+        );
     });
 }
 
