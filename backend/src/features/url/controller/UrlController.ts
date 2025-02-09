@@ -3,6 +3,10 @@ import { Application, NextFunction, Request } from "express";
 import { THandler } from "../../../common/types/request.type";
 import TResponse from "../../../common/types/response.type";
 import { BASE_V1_ENDPOINT } from "../../../common/utils/constants";
+import {
+    urlGenerationRateLimit,
+    urlRedirectRateLimit,
+} from "../../../common/utils/rateLimits";
 import { setJsonResponse } from "../../../common/utils/setJsonResponse";
 import UrlService from "../service/UrlService";
 
@@ -16,8 +20,16 @@ class UrlController {
     }
 
     buildEndpoints(): void {
-        this.app.get(BASE_V1_ENDPOINT + "/url/:urlId", this.findUrl());
-        this.app.post(BASE_V1_ENDPOINT + "/url", this.createUrl());
+        this.app.get(
+            BASE_V1_ENDPOINT + "/url/:urlId",
+            urlRedirectRateLimit,
+            this.findUrl()
+        );
+        this.app.post(
+            BASE_V1_ENDPOINT + "/url",
+            urlGenerationRateLimit,
+            this.createUrl()
+        );
     }
 
     findUrl(): THandler {
