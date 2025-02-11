@@ -61,15 +61,28 @@ const LandingPage = () => {
                 });
             })
             .catch((err) => {
+                const toastContent = {
+                    title: "Houston, we got a problem",
+                    description:
+                        "An unexpected error occured, if you don't mind please try again in a few minutes :/",
+                };
                 if (err instanceof AxiosError) {
-                    toast.toast({
-                        title: "Houston, we got a problem",
-                        description:
-                            "The request was taking too much to complete, if you don't mind please try again in a few minutes :/",
-                        variant: "destructive",
-                        duration: 15000,
-                    });
+                    if (err.code === "ECONNABORTED") {
+                        toastContent.description =
+                            "The request was taking too much to complete, if you don't mind please try again in a few minutes :/";
+                    } else if (err.status === 429) {
+                        const { data } = err.response?.data ?? {};
+                        toastContent.description = `Woah there! You made too many request, please wait another ${
+                            data.retryAfter ?? "few"
+                        } seconds to avoid destroying our database. Thank you!`;
+                    }
                 }
+                toast.toast({
+                    title: toastContent.title,
+                    description: toastContent.description,
+                    variant: "destructive",
+                    duration: 15000,
+                });
             });
     }
 
