@@ -72,7 +72,7 @@ const LandingPage = () => {
                             "The request was taking too much to complete, if you don't mind please try again in a few minutes :/";
                     } else if (err.status === 429) {
                         const { data } = err.response?.data ?? {};
-                        toastContent.description = `Woah there! You made too many request, please wait another ${
+                        toastContent.description = `Woah there! You made too many requests, please wait another ${
                             data.retryAfter ?? "few"
                         } seconds to avoid destroying our database. Thank you!`;
                     }
