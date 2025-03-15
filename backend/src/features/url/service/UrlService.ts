@@ -50,6 +50,19 @@ class UrlService {
         }
     }
 
+    async increaseUsages(id: url["id"]): Promise<void> {
+        try {
+            await this.urlRepository.increaseUsages(id);
+        } catch (err) {
+            if (err instanceof PrismaClientKnownRequestError) {
+                if (err.code === "P2025") {
+                    throw new NotFoundError("Url not found.", err);
+                }
+            }
+            throw err;
+        }
+    }
+
     generateUrlId(): string {
         return crypto.randomBytes(4).toString("hex");
     }
