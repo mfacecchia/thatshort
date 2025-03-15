@@ -37,6 +37,7 @@ class UrlController {
             try {
                 let urlId = req.params["urlId"];
                 let url = await this.urlService.findUrl(urlId);
+                this.urlService.increaseUsages(url.id);
                 setJsonResponse(res, 200, "Success", url);
                 return;
             } catch (err) {
