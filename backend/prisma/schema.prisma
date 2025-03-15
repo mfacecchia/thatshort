@@ -11,4 +11,5 @@ model url {
     id String @id @db.Char(8)
     redirect_to String
     created_at DateTime @default(now())
+    usages Int @default(0)
 }
