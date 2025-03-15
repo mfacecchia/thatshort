@@ -20,6 +20,19 @@ class UrlRepository {
         });
         url.created_at = createdUrl.created_at;
     }
+
+    async increaseUsages(id: url["id"]): Promise<void> {
+        await PRISMA_CLIENT.url.update({
+            data: {
+                usages: {
+                    increment: 1,
+                },
+            },
+            where: {
+                id,
+            },
+        });
+    }
 }
 
 export default UrlRepository;
