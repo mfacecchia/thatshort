@@ -38,7 +38,7 @@ class UrlController {
                 let urlId = req.params["urlId"];
                 let url = await this.urlService.findUrl(urlId);
                 this.urlService.increaseUsages(url.id);
-                setJsonResponse(res, 200, "Success", url);
+                setJsonResponse(res, 200, "Success", { url });
                 return;
             } catch (err) {
                 next(err);
@@ -54,9 +54,7 @@ class UrlController {
                 url.id = this.urlService.generateUrlId();
                 await this.urlService.createUrl(url);
                 let shortenedUrl = this.urlService.generateShortenedUrl(url);
-                setJsonResponse(res, 201, "Success", {
-                    shortenedUrl: shortenedUrl,
-                });
+                setJsonResponse(res, 201, "Success", { shortenedUrl });
                 return;
             } catch (err) {
                 next(err);
