@@ -7,6 +7,8 @@ import crypto from "crypto";
 import DatabaseConnectionError from "../../../common/errors/DatabaseConnectionError";
 import NotFoundError from "../../../common/errors/NotFoundError";
 import UrlCollisionError from "../errors/UrlCollisionError";
+import UrlDto from "../dto/UrlDto";
+import UrlMapper from "../mapper/UrlMapper";
 import UrlRepository from "../repository/UrlRepository";
 
 class UrlService {
@@ -16,13 +18,13 @@ class UrlService {
         this.urlRepository = new UrlRepository();
     }
 
-    async findUrl(id: url["id"]): Promise<url> {
+    async findUrl(id: url["id"]): Promise<UrlDto> {
         try {
             let url = await this.urlRepository.find(id);
             if (!url) {
                 throw new NotFoundError("Url not found.");
             }
-            return url;
+            return UrlMapper.mapToDto(url);
         } catch (err) {
             if (err instanceof PrismaClientInitializationError) {
                 throw new DatabaseConnectionError(
@@ -34,9 +36,10 @@ class UrlService {
         }
     }
 
-    async createUrl(url: url): Promise<void> {
+    async createUrl(url: url): Promise<UrlDto> {
         try {
             await this.urlRepository.create(url);
+            return UrlMapper.mapToDto(url);
         } catch (err) {
             if (err instanceof PrismaClientKnownRequestError) {
                 if (err.code === "P2002") {
