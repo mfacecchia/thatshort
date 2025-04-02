@@ -1,5 +1,5 @@
 {
-    "name": "backend",
+    "name": "thatshort-backend",
     "version": "1.0.0",
     "main": "./src/index.ts",
     "scripts": {
@@ -9,10 +9,9 @@
         "prod": "tsc && node ./dist/app.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "description": "",
+    "author": "Feis._.",
+    "license": "MIT",
+    "description": "Backend service for the \"Thatshort\" application.",
     "dependencies": {
         "cors": "^2.8.5",
         "express": "^4.21.2",
