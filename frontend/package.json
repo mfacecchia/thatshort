@@ -12,7 +12,7 @@
     },
     "dependencies": {
         "@hookform/resolvers": "^3.10.0",
-        "@radix-ui/react-slot": "^1.2.0",
+        "@radix-ui/react-slot": "^1.2.3",
         "@radix-ui/react-toast": "^1.2.7",
         "axios": "^1.8.4",
         "class-variance-authority": "^0.7.1",
